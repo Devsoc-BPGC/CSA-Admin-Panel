@@ -12,26 +12,18 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 // Import Campus picture
 import Campus from "../assets/img/campus.jpg";
-// Firebase authentication
-import * as firebase from "firebase/app";
-// Importing auth and firestore
-import "firebase/auth";
-import "firebase/firestore";
+import axios from "axios";
+import GoogleLogin from "react-google-login";
+// // Firebase authentication
+// import * as firebase from "firebase/app";
+// // Import firebase config
+// import firebaseConfig from "../firebase-config";
+// // Importing auth and firestore
+// import "firebase/auth";
+// import "firebase/firestore";
 
-// Firebase project Configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyATjcR_5F98ADo3iY5ZxgpcBSbMX4Z_M34",
-  authDomain: "csa-app-41a53.firebaseapp.com",
-  databaseURL: "https://csa-app-41a53.firebaseio.com",
-  projectId: "csa-app-41a53",
-  storageBucket: "csa-app-41a53.appspot.com",
-  messagingSenderId: "796324132621",
-  appId: "1:796324132621:web:e5a858cb09ca3eb2a1e244",
-  measurementId: "G-QT2TLBEY8V",
-};
-
-// Initialising Firebase
-firebase.initializeApp(firebaseConfig);
+// // Initialising Firebase
+// firebase.initializeApp(firebaseConfig);
 
 function Copyright() {
   return (
@@ -47,30 +39,6 @@ function Copyright() {
     </Typography>
   );
 }
-
-const handleLogin = () => {
-  console.log("hey");
-  var provider = new firebase.auth.GoogleAuthProvider();
-  provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then(function (result) {
-      // Google access token to access Google API
-      var token = result.credential.accessToken;
-      console.log(token);
-      // The signed-in user info.
-      var user = result.user;
-      // ...
-    })
-    .catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      var email = error.email;
-      var credential = error.credential;
-      // ...
-    });
-};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,7 +70,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    width: "100%",
+    margin: "auto",
   },
   copyright: {
     bottom: "0",
@@ -112,6 +81,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide() {
   const classes = useStyles();
+  const [email, setEmail] = React.useState("example@mail.com");
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  // const [loading, isLoading] = React.useState(false);
+
+  const responseGoogle = (response) => {
+    console.log(response);
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -127,7 +103,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <form className={classes.form} onSubmit={handleLogin}>
+          <form className={classes.form}>
             {/* <TextField
               variant="outlined"
               margin="normal"
@@ -154,7 +130,7 @@ export default function SignInSide() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             /> */}
-            <Button
+            {/* <Button
               type="submit"
               fullWidth
               variant="contained"
@@ -162,7 +138,14 @@ export default function SignInSide() {
               className={classes.submit}
             >
               Login with Google
-            </Button>
+            </Button> */}
+            <GoogleLogin
+              clientId="356883126789-kr191fl5f5odmmb8c9lr0dspapq41rlb.apps.googleusercontent.com"
+              buttonText="Login with Google"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              className={classes.submit}
+            />
             {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
