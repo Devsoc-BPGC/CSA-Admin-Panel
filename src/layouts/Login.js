@@ -10,6 +10,28 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+// Import Campus picture
+import Campus from "../assets/img/campus.jpg";
+// Firebase authentication
+import * as firebase from "firebase/app";
+// Importing auth and firestore
+import "firebase/auth";
+import "firebase/firestore";
+
+// Firebase project Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyATjcR_5F98ADo3iY5ZxgpcBSbMX4Z_M34",
+  authDomain: "csa-app-41a53.firebaseapp.com",
+  databaseURL: "https://csa-app-41a53.firebaseio.com",
+  projectId: "csa-app-41a53",
+  storageBucket: "csa-app-41a53.appspot.com",
+  messagingSenderId: "796324132621",
+  appId: "1:796324132621:web:e5a858cb09ca3eb2a1e244",
+  measurementId: "G-QT2TLBEY8V",
+};
+
+// Initialising Firebase
+firebase.initializeApp(firebaseConfig);
 
 function Copyright() {
   return (
@@ -26,12 +48,35 @@ function Copyright() {
   );
 }
 
+const handleLogin = () => {
+  console.log("hey");
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then(function (result) {
+      // Google access token to access Google API
+      var token = result.credential.accessToken;
+      console.log(token);
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+    })
+    .catch(function (error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      var email = error.email;
+      var credential = error.credential;
+      // ...
+    });
+};
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
   },
   image: {
-    backgroundImage: "url(https://imgur.com/DSBCxEk)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -39,6 +84,8 @@ const useStyles = makeStyles((theme) => ({
         : theme.palette.grey[900],
     backgroundSize: "cover",
     backgroundPosition: "center",
+    width: "100%",
+    height: "100vh",
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -69,7 +116,9 @@ export default function SignInSide() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={false} sm={4} md={7} className={classes.image}>
+        <img src={Campus} alt="campus" />
+      </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -78,7 +127,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={handleLogin}>
             {/* <TextField
               variant="outlined"
               margin="normal"
