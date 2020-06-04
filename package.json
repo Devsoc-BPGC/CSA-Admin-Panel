@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "chartist": "0.10.1",
     "classnames": "2.2.6",
+    "cors": "^2.8.5",
     "firebase": "^7.14.6",
     "history": "4.10.1",
     "perfect-scrollbar": "1.5.0",
