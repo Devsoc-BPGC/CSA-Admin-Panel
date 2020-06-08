@@ -15,6 +15,7 @@ import axios from "axios";
 import GoogleLogin from "react-google-login";
 // Admin page
 import Admin from "./Admin";
+import { Redirect } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -108,10 +109,8 @@ export default function Login() {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <>
-        {isLoggedIn ? (
-          <Admin style={{ width: "100%" }} />
-        ) : (
-          <>
+        {isLoggedIn ? <Redirect to="/admin" /> : ""}
+        <>
             <Grid item xs={false} sm={4} md={7} className={classes.image}>
               <img src={Campus} alt="campus" />
             </Grid>
@@ -150,7 +149,6 @@ export default function Login() {
               </div>
             </Grid>
           </>
-        )}
       </>
     </Grid>
   );

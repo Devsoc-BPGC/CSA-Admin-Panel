@@ -17,6 +17,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import ModalButton from "components/CustomButtons/Button.js";
 import axios from "axios";
+import { setConstantValue } from "typescript";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -105,18 +106,23 @@ export default function TableList() {
         console.log(err);
       });
   };
-  const [posts, setPosts] = useState([]);
+  
+  const [posts, setPosts] = useState([["sad", "dsa", "dsa", "sad"]]);
   const fetchResponse = async () => {
     const response = await axios.get(
       "https://jsonplaceholder.typicode.com/posts"
     );
     console.log(response);
-    setPosts(response.data);
-    setPosts(response.data);
-    setPosts(response.data);
+    let postData = [["sad", "dsa", "dsa", "sad"]];
+    response.data.forEach((element, key) => {
+      postData[key] = [element.userId.toString(), element.id.toString(), element.title, element.body]
+    });
+    setPosts(postData);
+    console.log(postData);
   };
   useEffect(() => {
     fetchResponse();
+    console.log(posts);
   }, []);
   console.log(posts);
   return (
@@ -130,10 +136,7 @@ export default function TableList() {
             <Table
               tableHeaderColor="primary"
               tableHead={["Description", "Author", "Date", "Time"]}
-              tableData={[
-                ["Dakota Plums", "Skartov", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-              ]}
+              tableData={posts}
             />
           </CardBody>
         </Card>

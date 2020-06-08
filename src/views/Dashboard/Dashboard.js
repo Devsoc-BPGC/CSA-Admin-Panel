@@ -1,6 +1,6 @@
-/*import React from "react";
+import React from "react";
 // react plugin for creating charts
-/*import ChartistGraph from "react-chartist";
+import ChartistGraph from "react-chartist";
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
@@ -45,7 +45,7 @@ export default function Dashboard() {
   const classes = useStyles();
   return (
     <div>
-      {/* <GridContainer>
+      <GridContainer>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="warning" stats icon>
@@ -196,7 +196,7 @@ export default function Dashboard() {
         </GridItem>
       </GridContainer>
       <GridContainer>}
-        {<GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={6}>
           <CustomTabs
             title="Tasks:"
             headerColor="primary"
@@ -262,4 +262,4 @@ export default function Dashboard() {
       </GridContainer> }
     </div>
   );
-}*/
+}
