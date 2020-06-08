@@ -96,6 +96,7 @@ export default function Login() {
         console.log(res);
 
         setIsLoggedIn(true);
+        window.location.href = "/admin/dashboard";
       })
       .catch((err) => {
         console.log(err);
@@ -108,7 +109,7 @@ export default function Login() {
       <CssBaseline />
       <>
         {isLoggedIn ? (
-          <Admin />
+          <Admin style={{ width: "100%" }} />
         ) : (
           <>
             <Grid item xs={false} sm={4} md={7} className={classes.image}>
